@@ -15,9 +15,14 @@ let filter = SimplexNoiseGenerator()
 filter.contrast = 2.0 // Do any parameter changes you want.
 guard 
     let output = filter.outputImage,
-    let result = ciContext.createCGImage(output, from: CGRect(x: 0, y: 0, width: 512, height: 512)
+    let result = ciContext.createCGImage(
+        output, 
+        from: CGRect(x: 0, y: 0, width: 512, height: 512)
+    )
 else { fatalError("Could not render.") }
-// Result is a CGImage which can be converted into a UIImage, NSImage, or Image depending on your platform.
+
+// result is a CGImage which can be converted into a UIImage, NSImage, or Image
+// depending on your platform.
 ```
 
 ## FractalNoiseGenerator
@@ -33,7 +38,12 @@ filter.contrast = 2.0 // Do any parameter changes you want.
 filter.octaves = 2
 guard 
     let output = filter.outputImage,
-    let result = ciContext.createCGImage(output, from: CGRect(x: 0, y: 0, width: 512, height: 512)
+    let result = ciContext.createCGImage(
+        output, 
+        from: CGRect(x: 0, y: 0, width: 512, height: 512)
+    )
 else { fatalError("Could not render.") }
-// Result is a CGImage which can be converted into a UIImage, NSImage, or Image depending on your platform.
+
+// result is a CGImage which can be converted into a UIImage, NSImage, or Image
+// depending on your platform.
 ```
