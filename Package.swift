@@ -20,9 +20,9 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "SimplexNoiseFilter",
-            dependencies: []),
-        .testTarget(
-            name: "SimplexNoiseFilterTests",
-            dependencies: ["SimplexNoiseFilter"]),
+            dependencies: [],
+            resources: [
+                .copy("SimplexNoise.ci.metallib"),
+            ]),
     ]
 )
