@@ -6,8 +6,9 @@ import PackageDescription
 let package = Package(
     name: "SimplexNoiseFilter",
     platforms: [
-        .macOS(.v10_14),
-        .iOS(.v12),
+        .macOS(.v10_13),
+        .iOS(.v11),
+        .tvOS(.v11),
     ],
     products: [
         .library(

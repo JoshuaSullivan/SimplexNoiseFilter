@@ -2,8 +2,8 @@ import CoreImage
 
 /// Produces a more complex version of Simplex Noise by combining 2-8 "octaves" of noise.
 ///
-/// Each octave is half the size of the previous one, meaning that additional octaves make the noise more
-/// complex while still retaining the smooth transition between values.
+/// Each octave is half the size of the previous one, meaning that additional octaves make
+/// the noise more complex while still retaining the smooth transition between values.
 ///
 class FractalNoiseGenerator: CIFilter {
 
