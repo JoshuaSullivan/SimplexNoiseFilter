@@ -21,7 +21,7 @@ let package = Package(
             name: "SimplexNoiseFilter",
             dependencies: [],
             resources: [
-                .copy("SimplexNoise.ci.metallib"),
+                .copy("resources/SimplexNoise.ci.metallib"),
             ]),
     ]
 )

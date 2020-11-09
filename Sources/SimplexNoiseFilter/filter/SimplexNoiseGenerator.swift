@@ -44,7 +44,7 @@ public final class SimplexNoiseGenerator: CIFilter {
 
     /// Set up the kernel by loading the metallib from the bundle.
     private static var kernel: CIColorKernel? = {
-        guard let url = Bundle.main.url(forResource: "SimplexNoise", withExtension: "ci.metallib") else { return nil }
+        guard let url = Bundle.module.url(forResource: "SimplexNoise", withExtension: "ci.metallib") else { return nil }
 
         do {
             let data = try Data(contentsOf: url)
