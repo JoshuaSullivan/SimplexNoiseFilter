@@ -48,9 +48,6 @@ public final class FractalNoiseGenerator: CIFilter {
     /// rougher (more complex) texture, while still retaining the smooth transitions.
     public var octaves: UInt8 = 3
 
-    /// Controls the overall scale of the noise. Default value is `1.0`.
-    public var frequency: Float = 1.0
-
     /// Controls the intensity of the noise. Default value is `1.0`.
     public var amplitude: Float = 1.0
 
@@ -75,7 +72,7 @@ public final class FractalNoiseGenerator: CIFilter {
 
     public override var outputImage: CIImage? {
         guard let kernel = FractalNoiseGenerator.kernel else {
-            print("Failed to create kernel.")
+            assertionFailure("Failed to create kernel.")
             return nil
         }
         return kernel.apply(
@@ -89,7 +86,6 @@ public final class FractalNoiseGenerator: CIFilter {
                 max(1.0, min(zoom, 1000.0)),
                 max(0.1, min(contrast, 10.0)),
                 Float(max(1, min(octaves, 8))),
-                frequency,
                 amplitude,
                 lacuniarity,
                 persistence,

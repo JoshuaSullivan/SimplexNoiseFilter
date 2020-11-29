@@ -217,9 +217,9 @@ float SimplexNoise::fractal(size_t octaves, float x, float y, float z, float fre
 extern "C" float4 SimplexNoise3D(float4 lowColor, float4 highColor, float offsetX, float offsetY, float offsetZ, float zoom, float contrast, coreimage::destination dest) {
 
     // Apply offsets in scaling.
-    float x = dest.coord().x / zoom + offsetX;
-    float y = dest.coord().y / zoom + offsetY;
-    float z = offsetZ;
+    float x = (dest.coord().x + offsetX) / zoom;
+    float y = (dest.coord().y + offsetY) / zoom;
+    float z = offsetZ / zoom;
 
     // Calculate noise value and normalize to the range [0, 1]
     float val = (SimplexNoise::noise(x, y, z) + 1.0) / 2.0;
@@ -238,16 +238,15 @@ extern "C" float4 SimplexNoise3D(float4 lowColor, float4 highColor, float offset
     return mix(lowColor, highColor, cVal);
 }
 
-extern "C" float4 FractalNoise3D(float4 lowColor, float4 highColor, float offsetX, float offsetY, float offsetZ, float zoom, float contrast, float octaves, float frequency, float amplitude, float lacuniarity, float persistence, coreimage::destination dest) {
+extern "C" float4 FractalNoise3D(float4 lowColor, float4 highColor, float offsetX, float offsetY, float offsetZ, float zoom, float contrast, float octaves, float amplitude, float lacuniarity, float persistence, coreimage::destination dest) {
 
     // Apply offsets and scaling.
-    float x = (dest.coord().x + offsetX) / zoom;
-    float y = (dest.coord().y + offsetY) / zoom;
-    float z = offsetZ / zoom;
+    float x = dest.coord().x + offsetX;
+    float y = dest.coord().y + offsetY;
     size_t oct = (size_t) octaves;
 
     // Calculate the noise value and normalize the result to the range [0, 1].
-    float val = (SimplexNoise::fractal(oct, x, y, z, frequency, amplitude, lacuniarity, persistence) + 1.0) / 2.0;
+    float val = (SimplexNoise::fractal(oct, x, y, offsetZ, 1.0 / zoom, amplitude, lacuniarity, persistence) + 1.0) / 2.0;
 
     // A contrast of 1.0 applies no transformation to the noise function, so we can just return it now.
     if (contrast == 1.0) { return mix(lowColor, highColor, val); }
@@ -256,7 +255,7 @@ extern "C" float4 FractalNoise3D(float4 lowColor, float4 highColor, float offset
     if (val == 0.0) { return lowColor; }
     if (val == 1.0) { return highColor; }
 
-    // Apply the sigmoid function.
+    // Apply the sigmoid function to adjust contrast.
     float cVal = 1 / (1 + pow(val / (1 - val), -contrast));
 
     // Return the mixed color value.
